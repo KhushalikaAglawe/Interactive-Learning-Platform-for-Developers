@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artista - Premium Art Gallery</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #1a1a1a;
+            --accent-gold: #c9a66b;
+            --light-cream: #f8f5f0;
+            --text-dark: #2a2a2a;
+            --text-light: #ffffff;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--light-cream);
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .navbar {
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            background: rgba(26, 26, 26, 0.95) !important;
+        }
+        
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-gold) !important;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            margin: 0 12px;
+            color: var(--light-cream) !important;
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .hero-section {
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1579547621700-03c2c337370a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1478&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(26, 26, 26, 0.85) 0%, rgba(26, 26, 26, 0.7) 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: var(--light-cream);
+        }
+        
+        .btn-gold {
+            background-color: var(--accent-gold);
+            color: var(--text-dark);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 2px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gold:hover {
+            background-color: #b89455;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-outline-light:hover {
+            background-color: var(--accent-gold);
+            color: var(--text-dark);
+            border-color: var(--accent-gold);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background-color: var(--accent-gold);
+            bottom: -15px;
+            left: 0;
+        }
+        
+        .artwork-card {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .artwork-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .artwork-card img {
+            transition: transform 0.7s ease;
+            width: 100%;
+        }
+        
+        .artwork-card:hover img {
+            transform: scale(1.08);
+        }
+        
+        .artwork-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 26, 0.85);
+            color: var(--light-cream);
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+        
+        .artwork-card:hover .artwork-info {
+            transform: translateY(0);
+        }
+        
+        .artist-card {
+            background: white;
+            padding: 25px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .artist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .artist-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 3px solid var(--accent-gold);
+        }
+        
+        .service-card {
+            background: white;
+            padding: 30px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            height: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+        
+        .service-icon {
+            font-size: 2.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .testimonial-card:before {
+            content: """;
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            color: var(--accent-gold);
+            position: absolute;
+            top: -20px;
+            left: 15px;
+            opacity: 0.2;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--light-cream);
+            padding: 70px 0 30px;
+        }
+        
+        .footer-title {
+            position: relative;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            color: var(--accent-gold);
+        }
+        
+        .footer-title:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-gold);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .social-icons a {
+            color: var(--light-cream);
+            font-size: 18px;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent-gold);
+        }
+        
+        .gallery-section {
+            padding: 100px 0;
+        }
+        
+        .bg-light-cream {
+            background-color: var(--light-cream);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .navbar-brand {
+                font-size: 24px;
+            }
+            
+            .artwork-info {
+                transform: translateY(0);
+                position: relative;
+                background: var(--primary-dark);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Artista</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#gallery">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#artists">Artists</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#exhibitions">Exhibitions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="display-3 fw-bold mb-4">Where Art Comes to Life</h1>
+                    <p class="lead mb-5">Discover extraordinary artworks from talented artists around the world. Immerse yourself in a world of creativity, beauty, and inspiration.</p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="#gallery" class="btn btn-gold btn-lg">Explore Gallery</a>
+                        <a href="#exhibitions" class="btn btn-outline-light btn-lg">Current Exhibitions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Artworks -->
+    <section id="gallery" class="gallery-section bg-light-cream">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Featured Artworks</h2>
+                <p class="lead">A carefully curated selection of exceptional pieces</p>
+            </div>
+            <div class="row">
+                <!-- Artwork 1 -->
+                <div class="col-md-4 mb-4">
+                    <div class="artwork-card">
+                        <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=745&q=80" alt="Abstract Art" class="img-fluid">
+                        <div class="artwork-info">
+                            <h5>Golden Horizon</h5>
+                            <p>By Maria Rodriguez | Oil on Canvas</p>
+                            <p>$1,200</p>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-gold">Add to Cart</button>
+                                <button class="btn btn-sm btn-outline-light">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Artwork 2 -->
+                <div class="col-md-4 mb-4">
+                    <div class="artwork-card">
+                        <img src="https://images.unsplash.com/photo-1543857778-c4a1a569e0bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=682&q=80" alt="Abstract Art" class="img-fluid">
+                        <div class="artwork-info">
+                            <h5>Abstract Thoughts</h5>
+                            <p>By James Johnson | Acrylic</p>
+                            <p>$2,400</p>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-gold">Add to Cart</button>
+                                <button class="btn btn-sm btn-outline-light">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Artwork 3 -->
+                <div class="col-md-4 mb-4">
+                    <div class="artwork-card">
+                        <img src="https://images.unsplash.com/photo-1515405295579-ba7b45403062?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ocean Art" class="img-fluid">
+                        <div class="artwork-info">
+                            <h5>Ocean Dreams</h5>
+                            <p>By Sarah Williams | Mixed Media</p>
+                            <p>$1,800</p>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-gold">Add to Cart</button>
+                                <button class="btn btn-sm btn-outline-light">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Artwork 4 -->
+                <div class="col-md-4 mb-4">
+                    <div class="artwork-card">
+                        <img src="https://images.unsplash.com/photo-1554188248-986adbb73be4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Colorful Art" class="img-fluid">
+                        <div class="artwork-info">
+                            <h5>Vibrant Essence</h5>
+                            <p>By Michael Chen | Acrylic Pour</p>
+                            <p>$2,100</p>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-gold">Add to Cart</button>
+                                <button class="btn btn-sm btn-outline-light">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Artwork 5 -->
+                <div class="col-md-4 mb-4">
+                    <div class="artwork-card">
+                        <img src="https://images.unsplash.com/photo-1531913764164-f85c52e6e654?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mountain Art" class="img-fluid">
+                        <div class="artwork-info">
+                            <h5>Mountain Serenity</h5>
+                            <p>By Robert Kim | Watercolor</p>
+                            <p>$1,500</p>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-gold">Add to Cart</button>
+                                <button class="btn btn-sm btn-outline-light">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Artwork 6 -->
+                <div class="col-md-4 mb-4">
+                    <div class="artwork-card">
+                        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Floral Art" class="img-fluid">
+                        <div class="artwork-info">
+                            <h5>Floral Symphony</h5>
+                            <p>By Emma Wilson | Oil on Canvas</p>
+                            <p>$1,900</p>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-gold">Add to Cart</button>
+                                <button class="btn btn-sm btn-outline-light">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-outline-dark btn-lg">View All Artworks</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artists Section -->
+    <section id="artists" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Featured Artists</h2>
+                <p class="lead">Meet the talented creators behind our collection</p>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="artist-card">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=776&q=80" alt="Artist 1" class="artist-img">
+                        <h5>Maria Rodriguez</h5>
+                        <p>Abstract Painter</p>
+                        <p class="small">Specializing in vibrant, emotional abstract works that capture the essence of human experience.</p>
+                        <button class="btn btn-outline-dark btn-sm mt-2">View Portfolio</button>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="artist-card">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80" alt="Artist 2" class="artist-img">
+                        <h5>James Johnson</h5>
+                        <p>Sculpture Artist</p>
+                        <p class="small">Creating captivating sculptures that explore the relationship between form, space, and material.</p>
+                        <button class="btn btn-outline-dark btn-sm mt-2">View Portfolio</button>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="artist-card">
+                        <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=776&q=80" alt="Artist 3" class="artist-img">
+                        <h5>Sarah Williams</h5>
+                        <p>Digital Artist</p>
+                        <p class="small">Pushing the boundaries of digital art with innovative techniques and thought-provoking concepts.</p>
+                        <button class="btn btn-outline-dark btn-sm mt-2">View Portfolio</button>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="artist-card">
+                        <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db1604?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80" alt="Artist 4" class="artist-img">
+                        <h5>Michael Chen</h5>
+                        <p>Oil Painter</p>
+                        <p class="small">Masterful oil paintings that capture the beauty of landscapes and the subtlety of light.</p>
+                        <button class="btn btn-outline-dark btn-sm mt-2">View Portfolio</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5 bg-light-cream">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Our Services</h2>
+                <p class="lead">Comprehensive art services for collectors and artists</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h4>Art Commission</h4>
+                        <p>Commission custom artwork from our talented artists. We'll match you with the perfect artist for your vision.</p>
+                        <a href="#" class="btn btn-outline-dark mt-3">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h4>Art Consultation</h4>
+                        <p>Our experts will help you select the perfect pieces for your space, considering your style and budget.</p>
+                        <a href="#" class="btn btn-outline-dark mt-3">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h4>Art Authentication</h4>
+                        <p>Verification and certification for artworks, ensuring provenance and investment value.</p>
+                        <a href="#" class="btn btn-outline-dark mt-3">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exhibitions Section -->
+    <section id="exhibitions" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Current Exhibitions</h2>
+                <p class="lead">Experience art in person at our gallery spaces</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card border-0 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1561484930-974554019ade?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Exhibition">
+                        <div class="card-body">
+                            <h5 class="card-title">Modern Abstraction</h5>
+                            <p class="card-text">Exploring the boundaries of abstract art in the 21st century. Featuring works from 12 contemporary artists.</p>
+                            <p class="text-gold"><i class="fas fa-calendar-alt me-2"></i>June 15 - August 30, 2023</p>
+                            <a href="#" class="btn btn-gold">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card border-0 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Exhibition">
+                        <div class="card-body">
+                            <h5 class="card-title">Nature's Palette</h5>
+                            <p class="card-text">A celebration of natural beauty through the eyes of landscape artists from around the world.</p>
+                            <p class="text-gold"><i class="fas fa-calendar-alt me-2"></i>July 1 - September 15, 2023</p>
+                            <a href="#" class="btn btn-gold">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-5 bg-light-cream">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">What Our Collectors Say</h2>
+                <p class="lead">Hear from our satisfied clients and artists</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"I've been collecting art for over 20 years, and ArtVista has some of the most unique pieces I've ever seen. The quality is exceptional and their customer service is outstanding."</p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80" alt="Client 1" class="artist-img">
+                            <div>
+                                <h5 class="mb-0">Robert Wilson</h5>
+                                <p class="mb-0">Art Collector</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"As an interior designer, I'm always looking for unique artwork for my projects. ArtVista has become my go-to source for finding talented emerging artists with fresh perspectives."</p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=772&q=80" alt="Client 2" class="artist-img">
+                            <div>
+                                <h5 class="mb-0">Jennifer Parker</h5>
+                                <p class="mb-0">Interior Designer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-5 bg-dark text-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h3>Subscribe to Our Newsletter</h3>
+                    <p>Get updates on new artworks, exhibitions, and exclusive offers.</p>
+                </div>
+                <div class="col-lg-6">
+                    <form class="d-flex">
+                        <input type="email" class="form-control me-2" placeholder="Your email address" aria-label="Email">
+                        <button class="btn btn-gold" type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="footer-title">Artista Gallery</h4>
+                    <p>Discover beautiful artworks from talented artists around the world. We connect art lovers with creators to bring beauty into your life.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light text-decoration-none">Home</a></li>
+                        <li><a href="#gallery" class="text-light text-decoration-none">Gallery</a></li>
+                        <li><a href="#artists" class="text-light text-decoration-none">Artists</a></li>
+                        <li><a href="#services" class="text-light text-decoration-none">Services</a></li>
+                        <li><a href="#contact" class="text-light text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <h4 class="footer-title">Contact Info</h4>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Art Street, New York, NY</li>
+                        <li><i class="fas fa-phone me-2"></i> (123) 456-7890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@artista.com</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <h4 class="footer-title">Opening Hours</h4>
+                    <ul class="list-unstyled">
+                        <li>Monday - Friday: 9am - 6pm</li>
+                        <li>Saturday: 10am - 5pm</li>
+                        <li>Sunday: 11am - 4pm</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">© 2023 Artista Gallery. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-light text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-light text-decoration-none">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <script>
+        // Add navbar background on scroll
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-sm');
+                navbar.style.padding = "10px 0";
+            } else {
+                navbar.classList.remove('shadow-sm');
+                navbar.style.padding = "20px 0";
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
